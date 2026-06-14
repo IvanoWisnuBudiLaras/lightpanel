@@ -7,6 +7,7 @@ SERVICE_NAME="${LIGHTPANEL_SERVICE_NAME:-lightpanel.service}"
 SYSTEMD_UNIT_PATH="${SYSTEMD_UNIT_PATH:-/etc/systemd/system/$SERVICE_NAME}"
 BACKUP_ROOT="$INSTALL_DIR/backups"
 CONFIG_FILE="$INSTALL_DIR/config/lightpanel.toml"
+TMP_DIR=""
 
 fail() {
   echo "self-update error: $*" >&2
@@ -19,6 +20,12 @@ safe_rm_dir() {
     "$INSTALL_DIR"/*) rm -rf "$path" ;;
     *) fail "refusing to remove unsafe path: $path" ;;
   esac
+}
+
+cleanup() {
+  if [ -n "${TMP_DIR:-}" ] && [ -d "$TMP_DIR" ]; then
+    rm -rf "$TMP_DIR"
+  fi
 }
 
 validate_input() {
@@ -92,15 +99,15 @@ restart_service() {
 main() {
   validate_input
   mkdir -p "$INSTALL_DIR" "$BACKUP_ROOT"
-  local backup_dir tmp_dir
+  local backup_dir
   backup_dir="$(create_backup)"
-  tmp_dir="$(mktemp -d)"
-  trap 'rm -rf "$tmp_dir"' EXIT
+  TMP_DIR="$(mktemp -d)"
+  trap cleanup EXIT
 
   echo "backup created: $backup_dir"
-  extract_artifact "$tmp_dir"
-  install_files "$tmp_dir"
-  install_service_if_changed "$tmp_dir"
+  extract_artifact "$TMP_DIR"
+  install_files "$TMP_DIR"
+  install_service_if_changed "$TMP_DIR"
 
   if restart_service; then
     echo "LightPanel update completed"
@@ -112,4 +119,3 @@ main() {
 }
 
 main
-
