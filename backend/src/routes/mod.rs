@@ -14,5 +14,7 @@ pub fn router(state: AppState) -> Router {
         .nest("/api/health", health::routes())
         .nest("/api/apps", apps::routes())
         .nest("/api/dashboard", dashboard::routes())
+        .nest("/api/databases", databases::routes())
+        .nest("/api/logs", logs::routes())
         .with_state(state)
 }

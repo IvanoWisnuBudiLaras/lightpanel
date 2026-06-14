@@ -5,6 +5,8 @@ use std::{
     io::Write,
 };
 
+use super::journal::{self, LogSnapshot};
+
 pub fn path_for_app(app_name: &str) -> Result<String, AppError> {
     Ok(app_paths::deploy_log_path(app_name)?
         .to_string_lossy()
@@ -19,4 +21,8 @@ pub fn append(path: &str, message: &str) -> Result<(), AppError> {
     let mut file = OpenOptions::new().create(true).append(true).open(path)?;
     writeln!(file, "{message}")?;
     Ok(())
+}
+
+pub fn read_for_app(app_name: &str, max_lines: usize) -> Result<LogSnapshot, AppError> {
+    journal::tail_file(app_paths::deploy_log_path(app_name)?, max_lines)
 }

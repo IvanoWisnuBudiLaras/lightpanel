@@ -5,6 +5,7 @@
   import Dashboard from './routes/Dashboard.svelte';
   import Databases from './routes/Databases.svelte';
   import Deploy from './routes/Deploy.svelte';
+  import Domains from './routes/Domains.svelte';
   import Logs from './routes/Logs.svelte';
   import Security from './routes/Security.svelte';
   import Settings from './routes/Settings.svelte';
@@ -15,6 +16,7 @@
     '/': 'Dashboard',
     '/apps': 'Apps',
     '/deploy': 'Deploy',
+    '/domains': 'Domains',
     '/logs': 'Logs',
     '/databases': 'Databases',
     '/security': 'Security',
@@ -53,6 +55,8 @@
       <AppDetail id={path.split('/')[2]} />
     {:else if path === '/deploy'}
       <Deploy />
+    {:else if path === '/domains'}
+      <Domains />
     {:else if path === '/logs'}
       <Logs />
     {:else if path === '/databases'}

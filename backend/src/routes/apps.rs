@@ -6,6 +6,9 @@ use crate::services::{
         DeployStaticRequest, StaticDeployResult, StaticSiteAdapter,
     },
     deployment::adapters::node::{DeployNodeRequest, NodeAdapter, NodeDeployResult},
+    logs::{deploy_log, journal},
+    nginx::config_generator,
+    ssl::acme,
     systemd::unit_generator,
 };
 use axum::{
@@ -20,6 +23,9 @@ pub fn routes() -> Router<AppState> {
         .route("/{id}", get(get_app).put(update_app).delete(delete_app))
         .route("/{id}/deploy/static", post(deploy_static))
         .route("/{id}/deploy/node", post(deploy_node))
+        .route("/{id}/logs/deploy", get(app_deploy_log))
+        .route("/{id}/nginx/preview", get(nginx_preview))
+        .route("/{id}/ssl/preview", get(ssl_preview))
         .route("/{id}/systemd/preview", get(systemd_preview))
 }
 
@@ -64,6 +70,30 @@ async fn systemd_preview(
 ) -> Result<Json<response::ApiResponse<unit_generator::SystemdPreview>>, AppError> {
     let app = apps::get_app(&state, &id)?;
     Ok(response::ok(unit_generator::preview_for_app(&app)?))
+}
+
+async fn nginx_preview(
+    State(state): State<AppState>,
+    Path(id): Path<String>,
+) -> Result<Json<response::ApiResponse<config_generator::NginxPreview>>, AppError> {
+    let app = apps::get_app(&state, &id)?;
+    Ok(response::ok(config_generator::preview_for_app(&app)?))
+}
+
+async fn ssl_preview(
+    State(state): State<AppState>,
+    Path(id): Path<String>,
+) -> Result<Json<response::ApiResponse<acme::SslPreview>>, AppError> {
+    let app = apps::get_app(&state, &id)?;
+    Ok(response::ok(acme::preview_for_app(&app)?))
+}
+
+async fn app_deploy_log(
+    State(state): State<AppState>,
+    Path(id): Path<String>,
+) -> Result<Json<response::ApiResponse<journal::LogSnapshot>>, AppError> {
+    let app = apps::get_app(&state, &id)?;
+    Ok(response::ok(deploy_log::read_for_app(&app.name, 200)?))
 }
 
 async fn deploy_static(

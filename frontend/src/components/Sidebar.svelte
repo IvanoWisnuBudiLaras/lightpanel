@@ -5,6 +5,7 @@
     ['/', 'Dashboard'],
     ['/apps', 'Apps'],
     ['/deploy', 'Deploy'],
+    ['/domains', 'Domains'],
     ['/logs', 'Logs'],
     ['/databases', 'Databases'],
     ['/security', 'Security'],

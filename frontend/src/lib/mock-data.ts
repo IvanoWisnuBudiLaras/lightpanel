@@ -21,7 +21,7 @@ export const recentActivity = [
 export const deploymentHealth = [
   { label: 'Static adapter', value: 'ready', detail: 'local source directory' },
   { label: 'Node adapter', value: 'foundation', detail: 'npm/pnpm allowlist' },
-  { label: 'Nginx', value: 'pending', detail: 'preview generator next' },
+  { label: 'Nginx', value: 'preview', detail: 'config generator ready' },
 ];
 
 export const securityItems = [
@@ -33,6 +33,7 @@ export const securityItems = [
 export const quickActions = [
   { label: 'Review apps', href: '/apps' },
   { label: 'Deploy source', href: '/deploy' },
+  { label: 'Manage domains', href: '/domains' },
   { label: 'Inspect logs', href: '/logs' },
   { label: 'Security posture', href: '/security' },
 ];

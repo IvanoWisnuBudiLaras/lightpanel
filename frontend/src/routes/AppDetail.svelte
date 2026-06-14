@@ -38,6 +38,8 @@
       <div class="actions">
         <AppStatusBadge status={app.status} />
         <ActionButton href="/deploy" label="Deploy" />
+        <ActionButton href="/domains" label="Domains" />
+        <ActionButton href="/logs" label="Logs" />
       </div>
     </section>
 

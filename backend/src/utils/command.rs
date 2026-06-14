@@ -112,6 +112,7 @@ fn is_allowlisted(program: &str, args: &[&str]) -> bool {
         ("yarn", &["--version"]),
         ("uname", &["-r"]),
         ("uname", &["-m"]),
+        ("df", &["-P", "/"]),
     ];
 
     ALLOWLIST
