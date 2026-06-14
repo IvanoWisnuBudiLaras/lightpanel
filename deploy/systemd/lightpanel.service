@@ -1,0 +1,23 @@
+[Unit]
+Description=LightPanel control panel
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/lightpanel
+ExecStart=/opt/lightpanel/lightpanel
+Restart=always
+RestartSec=5
+
+# Recommended production user. If the user does not exist during early MVP
+# testing, create it or temporarily remove these two lines after reviewing risk.
+User=lightpanel
+Group=lightpanel
+
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectHome=true
+
+[Install]
+WantedBy=multi-user.target
+

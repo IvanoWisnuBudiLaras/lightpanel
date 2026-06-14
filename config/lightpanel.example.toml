@@ -1,0 +1,23 @@
+[paths]
+install_dir = "/opt/lightpanel"
+data_dir = "/opt/lightpanel/data"
+apps_dir = "/opt/lightpanel/data/apps"
+config_file = "/opt/lightpanel/config/lightpanel.toml"
+nginx_sites_available = "/etc/nginx/sites-available"
+nginx_sites_enabled = "/etc/nginx/sites-enabled"
+systemd_unit_dir = "/etc/systemd/system"
+acme_sh = "/root/.acme.sh/acme.sh"
+
+[server]
+host = "127.0.0.1"
+port = 3000
+
+[runtime_paths]
+node = "/usr/bin/node"
+npm = "/usr/bin/npm"
+pnpm = "/usr/bin/pnpm"
+php = "/usr/bin/php"
+python = "/usr/bin/python3"
+go = "/usr/bin/go"
+rustc = "/usr/bin/rustc"
+dotnet = "/usr/bin/dotnet"

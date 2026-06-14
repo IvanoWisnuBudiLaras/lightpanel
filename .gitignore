@@ -1,0 +1,16 @@
+target/
+node_modules/
+dist/
+frontend/dist/
+.env
+.env.*
+!.env.example
+*.db
+*.sqlite
+*.log
+*.pem
+*.key
+id_rsa*
+lightpanel-linux-x64.tar.gz
+.deploy/
+.DS_Store
